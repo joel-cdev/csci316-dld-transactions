@@ -1,0 +1,7 @@
+# Processed data (Spark outputs)
+data/processed/
+data/**/_SUCCESS
+data/**/*.crc
+
+# Raw data directory
+data/raw/
