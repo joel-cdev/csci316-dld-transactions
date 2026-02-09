@@ -1,7 +1,7 @@
 # --------------------------------------------------
 # Base Image
 # --------------------------------------------------
-FROM python:3.10-slim
+FROM python:3.10-slim-bookworm
 
 # --------------------------------------------------
 # Environment Variables
@@ -12,12 +12,14 @@ ENV PYTHONUNBUFFERED=1
 # --------------------------------------------------
 # System Dependencies (Java for Spark)
 # --------------------------------------------------
-RUN apt-get update && apt-get install -y \
-    openjdk-17-jdk \
-    curl \
+
+FROM eclipse-temurin:21-jre-jammy
+
+RUN apt-get update && apt-get install -y --fix-missing \
+    python3 python3-pip curl \
     && rm -rf /var/lib/apt/lists/*
 
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk
 ENV PATH="$JAVA_HOME/bin:$PATH"
 
 # --------------------------------------------------
