@@ -57,3 +57,60 @@ Apache Spark is used throughout this project due to:
   pipelines and model training.
 
 All core processing is performed using **Spark DataFrames and Spark ML**.
+
+---
+
+## Docker-Based Reproducibility
+
+To ensure full reproducibility and environment independence, the complete analytics pipeline is containerized using **Docker**.
+
+The Docker container encapsulates:
+- Python runtime
+- Apache Spark (local mode)
+- All required Python dependencies
+- The full end-to-end pipeline logic
+
+Large datasets are **not committed to GitHub**. Instead, data is mounted locally into the container at runtime.
+
+---
+
+### Prerequisites
+- Docker Desktop installed and running
+- Cleaned Spark Parquet dataset available locally
+
+---
+
+### Expected Local Data Structure
+
+```text
+data/
+└── processed/
+    └── land_transactions_cleaned.parquet/
+        ├── part-00000-*.parquet
+        ├── part-00001-*.parquet
+        └── _SUCCESS
+```
+
+---
+
+### Build the Docker Image
+
+```bash
+docker build -t csci316-dld .
+```
+
+---
+
+### Run the Pipeline Using Docker
+
+```bash
+docker run --rm -v "%cd%\data:/app/data" csci316-dld
+```
+
+---
+
+### Expected Output
+
+```text
+Pipeline execution completed successfully.
+```
