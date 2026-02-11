@@ -1,4 +1,17 @@
-pyspark==3.5.0
-numpy==1.26.4
-pandas==2.2.2
-matplotlib==3.8.4
+# Core
+pyspark==3.5.1
+pandas
+numpy
+
+# Visualization
+matplotlib
+seaborn
+
+# Web App
+streamlit
+
+# Utilities
+python-dotenv
+streamlit-jupyter
+nbconvert
+nbformat

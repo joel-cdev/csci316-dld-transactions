@@ -1,6 +1,8 @@
-def run_bagging_ensemble(df):
-    """
-    Execute custom bagging ensemble.
-    Full ensemble logic is shown in the notebooks.
-    """
-    print("Bagging ensemble executed.")
+def ensemble_average(models, df):
+    preds = [model.transform(df).select("prediction") for model in models]
+
+    base = preds[0]
+    for i in range(1, len(preds)):
+        base = base.withColumnRenamed("prediction", f"pred_{i}")
+
+    return base

@@ -1,0 +1,13 @@
+{
+    "timestamp": "2026-02-11T21:54:07.058134",
+    "dataset_rows": 2838,
+    "train_rows": 2319,
+    "test_rows": 519,
+    "features_used": "features",
+    "target": "meter_sale_price",
+    "best_model": "LinearRegression",
+    "best_rmse": 8.181596850531218e-11,
+    "linear_regression_rmse": 8.181596850531218e-11,
+    "decision_tree_rmse": 344362.15503765526,
+    "seed": 42
+}
