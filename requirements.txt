@@ -1,17 +1,5 @@
-# Core
-pyspark==3.5.1
+streamlit
 pandas
-numpy
-
-# Visualization
 matplotlib
 seaborn
-
-# Web App
-streamlit
-
-# Utilities
-python-dotenv
-streamlit-jupyter
-nbconvert
-nbformat
+numpy
