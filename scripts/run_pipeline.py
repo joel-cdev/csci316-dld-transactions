@@ -104,7 +104,7 @@ def main():
 
     if "prediction" in test_df.columns:
         test_df = test_df.drop("prediction", "rawPrediction", "probability")  
-        
+
     predictions = best_model.transform(test_df)
 
     predictions_df = predictions.select(
@@ -145,6 +145,13 @@ def main():
     print("Pipeline complete.")
     spark.stop()
 
+    from src.utils.generate_figures import generate_all_figures
+
+    generate_all_figures(
+        METRICS_DIR,
+        PREDICTIONS_DIR,
+        FIGURES_DIR
+    )
 
 if __name__ == "__main__":
     main()

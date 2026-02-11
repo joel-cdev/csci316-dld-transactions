@@ -1,39 +1,36 @@
-from pyspark.ml import Pipeline
 from pyspark.ml.feature import VectorAssembler, StandardScaler
-from pyspark.ml.regression import RandomForestRegressor
 
 
 def build_features(df):
 
-    from pyspark.ml import Pipeline
-from pyspark.ml.feature import VectorAssembler, StandardScaler
-from pyspark.ml.regression import RandomForestRegressor
+    # Drop any previous prediction columns
+    for c in ["prediction", "rawPrediction", "probability"]:
+        if c in df.columns:
+            df = df.drop(c)
 
-
-def build_features(df):
-
-    # Drop old model outputs if present
-    for col in ["prediction", "rawPrediction", "probability"]:
-        if col in df.columns:
-            df = df.drop(col)
+    # Explicitly exclude the target column
+    feature_columns = [
+        "procedure_area",
+        "rent_value"
+    ]
 
     assembler = VectorAssembler(
-        inputCols=[
-            "meter_sale_price",
-            "procedure_area",
-            "rent_value"
-        ],
+        inputCols=feature_columns,
         outputCol="features",
         handleInvalid="skip"
     )
 
-    rf = RandomForestRegressor(
-        featuresCol="features",
-        labelCol="actual_worth"
+    df = assembler.transform(df)
+
+    # Optional scaling (recommended for LR)
+    scaler = StandardScaler(
+        inputCol="features",
+        outputCol="scaled_features",
+        withMean=True,
+        withStd=True
     )
 
-    pipeline = Pipeline(stages=[assembler, rf])
+    scaler_model = scaler.fit(df)
+    df = scaler_model.transform(df)
 
-    pipeline_model = pipeline.fit(df)
-
-    return pipeline_model.transform(df)
+    return df
