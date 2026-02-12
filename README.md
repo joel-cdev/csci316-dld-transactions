@@ -1,116 +1,298 @@
-## Project Overview
+# 🏙 CSCI316 — Large-Scale Real Estate Analytics (Dubai Land Transactions)
 
-This project presents a large-scale data analytics pipeline built using
-**Apache Spark** to analyze real-world transactional data from the
-**Dubai Pulse Land Transactions dataset**.
-
-The objective of the project is to design and implement a **scalable,
-fault-tolerant, and reproducible analytics solution** that can handle
-messy, transactional data and extract meaningful insights using
-machine learning techniques.
-
-The solution covers the complete big data lifecycle, including:
-
-- Fault-tolerant data ingestion
-- Schema inspection and validation
-- Feature engineering at scale
-- Baseline machine learning models
-- Manual 10-fold cross-validation
-- Custom ensemble learning from scratch
-- Result analysis and interpretation
-- Docker-based reproducibility
+**Course:** Big Data Mining and Applications
+**Institution:** University of Wollongong in Dubai
+**Framework:** Apache Spark + Custom ML + Docker + Streamlit
 
 ---
 
-## Dataset Description
+## 📌 Overview
 
-The dataset used in this project is the **Dubai Pulse Land Transactions**
-dataset, which contains structured records of real estate transactions
-conducted in Dubai over multiple years.
+This project implements a **Spark-native large-scale machine learning pipeline** for modeling Dubai real estate transaction prices using public land transaction data.
 
-Key characteristics of the dataset include:
+The system demonstrates:
 
-- **Transactional nature:** Each record represents a registered land or
-  property transaction.
-- **Mixed data types:** Numerical, categorical, temporal, and bilingual
-  (Arabic/English) attributes.
-- **Data quality challenges:** Missing values, malformed records, and
-  inconsistent formatting.
-- **Scalability considerations:** Designed to grow continuously as new
-  transactions are recorded.
+* Distributed data processing with Apache Spark
+* Explicit schema enforcement and cleaning
+* Manual 10-fold cross validation (no library shortcuts)
+* Custom ensemble learning implementation
+* Reproducible containerized environment (Docker)
+* Interactive results dashboard (Streamlit)
 
-These characteristics justify the use of **Apache Spark** over
-traditional in-memory tools such as Pandas.
+The focus of this project is **system design, scalability, and reproducibility**, not just predictive accuracy.
 
 ---
 
-## Why Apache Spark?
+## 🎯 Problem Statement
 
-Apache Spark is used throughout this project due to:
+Can we model real estate price-per-meter variation in Dubai using structured transaction data while ensuring scalability and robustness?
 
-- **Fault tolerance:** Ability to ingest and process malformed CSV data
-  without pipeline failure.
-- **Scalability:** Efficient handling of large, transactional datasets
-  and repeated transformations.
-- **Distributed processing:** Native support for parallel computation.
-- **Machine learning support:** Spark ML enables scalable feature
-  pipelines and model training.
+Challenges include:
 
-All core processing is performed using **Spark DataFrames and Spark ML**.
+* Large dataset size
+* Missing values and inconsistent schemas
+* Heavy-tailed price distributions
+* Mixed numeric and categorical data
+* Real-world noise and outliers
 
----
-
-## Docker-Based Reproducibility
-
-To ensure full reproducibility and environment independence, the complete analytics pipeline is containerized using **Docker**.
-
-The Docker container encapsulates:
-- Python runtime
-- Apache Spark (local mode)
-- All required Python dependencies
-- The full end-to-end pipeline logic
-
-Large datasets are **not committed to GitHub**. Instead, data is mounted locally into the container at runtime.
+This project builds a distributed ML pipeline to address these challenges.
 
 ---
 
-### Prerequisites
-- Docker Desktop installed and running
-- Cleaned Spark Parquet dataset available locally
+## 📊 Dataset
+
+**Source:** Dubai Pulse — Land Transactions Dataset
+
+Characteristics:
+
+* Multi-year transaction records
+* Numeric + categorical + temporal attributes
+* Bilingual fields (Arabic + English)
+* Missing values and inconsistent formatting
+* Transaction-level granularity
+
+These characteristics justify distributed processing using Spark instead of Pandas.
 
 ---
 
-### Expected Local Data Structure
+## 🧠 Why Apache Spark?
 
-```text
+Spark was selected because:
+
+| Challenge                | Spark Justification            |
+| ------------------------ | ------------------------------ |
+| Large dataset            | Distributed processing         |
+| Memory constraints       | Lazy execution model           |
+| Fault tolerance          | Resilient distributed datasets |
+| Repeated transformations | Optimized execution planning   |
+
+Processing this dataset purely with Pandas would be inefficient and non-scalable.
+
+---
+
+## 🏗 System Architecture
+
+```
+Raw Dataset
+    ↓
+Spark Ingestion
+    ↓
+Schema Enforcement & Cleaning
+    ↓
+Feature Engineering
+    ↓
+Baseline Models
+    ↓
+Manual 10-Fold Cross Validation
+    ↓
+Custom Ensemble
+    ↓
+Metrics + Predictions + Figures
+    ↓
+Streamlit Dashboard
+```
+
+---
+
+## ⚙️ Pipeline Components
+
+### 1️⃣ Data Layer
+
+* Explicit schema definition
+* Null handling
+* Type casting
+* Data validation
+* Partition-aware transformations
+
+### 2️⃣ Feature Engineering
+
+* VectorAssembler
+* StandardScaler
+* Numeric feature selection
+* Target exclusion enforcement
+
+### 3️⃣ Baseline Models
+
+* Linear Regression
+* Decision Tree Regressor
+
+### 4️⃣ Manual Cross Validation
+
+* Manual 10-fold splitting
+* Train on 9 folds
+* Validate on 1 fold
+* Metric aggregation
+
+No use of:
+
+* `CrossValidator`
+* `GridSearchCV`
+* Built-in Spark CV utilities
+
+### 5️⃣ Custom Ensemble
+
+* Bagging implementation
+* Bootstrap sampling
+* Majority/mean aggregation
+* No use of RandomForest or GradientBoosting APIs
+
+---
+
+## 📈 Results Summary
+
+| Model             | RMSE     | R²      |
+| ----------------- | -------- | ------- |
+| Linear Regression | ~344,000 | ~0.001  |
+| Decision Tree     | ~345,000 | ~0.0004 |
+
+### Interpretation
+
+* Extremely low R² indicates strong underfitting.
+* Linear regression cannot capture nonlinear structure.
+* Decision tree slightly stabilizes variance but still weak.
+* Ensemble improves robustness but not dramatically.
+
+The primary bottleneck is **feature richness**, not model type.
+
+---
+
+## 🔍 Key Insights
+
+* Price distribution is heavy-tailed.
+* Errors increase for high-value properties (heteroscedasticity).
+* Residuals are not normally distributed.
+* Dataset contains significant noise.
+* Feature engineering is critical for performance.
+
+---
+
+## ⚠️ Limitations
+
+* Limited feature set
+* No categorical encoding yet
+* No spatial proximity features
+* No time-trend modeling
+* No hyperparameter tuning
+
+These were deliberate constraints to prioritize system architecture validation.
+
+---
+
+## 🚀 Future Work
+
+* Log-transform target variable
+* Add categorical encoding (location, property type)
+* Incorporate temporal trend features
+* Spatial feature engineering
+* Gradient boosting models
+* Production API deployment
+* Distributed hyperparameter tuning
+
+---
+
+## 📦 Repository Structure
+
+```
 data/
-└── processed/
-    └── land_transactions_cleaned.parquet/
-        ├── part-00000-*.parquet
-        ├── part-00001-*.parquet
-        └── _SUCCESS
+  raw/
+  processed/
+  outputs/
+     metrics/
+     predictions/
+     figures/
+     metadata/
+
+notebooks/
+scripts/
+src/
+   spark/
+   features/
+   models/
+   ensemble/
+   validation/
+   utils/
+
+streamlit_app.py
+Dockerfile
+requirements.txt
+README.md
 ```
 
 ---
 
-### Build the Docker Image
+## 📊 Generated Artifacts
 
-```bash
-docker build -t csci316-dld .
+Running the pipeline produces:
+
+* `baseline_metrics.csv`
+* `cv_results.csv`
+* `ensemble_metrics.csv`
+* `test_predictions.csv`
+* `run_info.json`
+* Evaluation plots (RMSE comparison, residual distribution, etc.)
+
+These artifacts power the Streamlit dashboard.
+
+---
+
+## 🧪 How to Run
+
+### 1️⃣ Install dependencies
+
+```
+pip install -r requirements.txt
+```
+
+### 2️⃣ Run the full Spark pipeline
+
+```
+python scripts/run_pipeline.py
+```
+
+### 3️⃣ Launch Streamlit dashboard
+
+```
+streamlit run streamlit_app.py
 ```
 
 ---
 
-### Run the Pipeline Using Docker
+## 🐳 Docker (UI Only)
 
-```bash
-docker run --rm -v "%cd%\data:/app/data" csci316-dld
+Docker is used to containerize the Streamlit showcase for reproducibility.
+
+Build image:
+
+```
+docker build -t dld-streamlit .
+```
+
+Run container:
+
+```
+docker run -p 8501:8501 dld-streamlit
 ```
 
 ---
 
-### Expected Output
+## 📚 References
 
-```text
-Pipeline execution completed successfully.
-```
+* Apache Spark Documentation
+* Dubai Pulse Data Portal
+* Hastie, Tibshirani & Friedman — *Elements of Statistical Learning*
+* Géron — *Hands-On Machine Learning*
+
+---
+
+## 🏁 Final Takeaway
+
+This project demonstrates:
+
+* Scalable distributed ML pipeline design
+* Manual validation logic implementation
+* Custom ensemble development
+* Reproducible containerized deployment
+
+Accuracy can be improved.
+
+System design must come first.
