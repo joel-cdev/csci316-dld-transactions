@@ -9,9 +9,7 @@ st.title("CSCI316 – DLD Transactions Dashboard")
 
 BASE_PATH = Path("data/outputs")
 
-# ==================================================
 # Sidebar: Run Metadata
-# ==================================================
 st.sidebar.header("Run Information")
 
 metadata_path = BASE_PATH / "metadata" / "run_info.json"
@@ -25,17 +23,14 @@ if metadata_path.exists():
 else:
     st.sidebar.warning("No run metadata found.")
 
-
-# ==================================================
 # Tabs Layout
-# ==================================================
+
 tab1, tab2, tab3, tab4 = st.tabs(
     ["Metrics", "Predictions", "Figures", "Notebooks"]
 )
 
-# ==================================================
 # Metrics Tab
-# ==================================================
+
 with tab1:
 
     st.header("Model Metrics")
@@ -66,9 +61,8 @@ with tab1:
         st.dataframe(df_cv)
 
 
-# ==================================================
 # Predictions Tab
-# ==================================================
+
 with tab2:
 
     st.header("Test Predictions")
@@ -82,9 +76,8 @@ with tab2:
         st.warning("No predictions file found.")
 
 
-# ==================================================
 # Figures Tab
-# ==================================================
+
 with tab3:
 
     st.header("Visualizations")
@@ -101,12 +94,9 @@ with tab3:
         st.warning("No figures found.")
 
 
-# ==================================================
 # Notebooks Tab (HTML Version)
-# ==================================================
-# ==================================================
+
 # Notebooks Tab (Pure Python .ipynb Renderer)
-# ==================================================
 with tab4:
 
     st.header("Notebooks")

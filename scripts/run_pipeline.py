@@ -21,9 +21,7 @@ from pyspark.sql.functions import col
 
 def main():
 
-    # --------------------------------------------------
-    # 1️⃣ Ensure Output Directories
-    # --------------------------------------------------
+    # 1️- Ensure Output Directories
 
     ensure_directories([
         METRICS_DIR,
@@ -42,9 +40,7 @@ def main():
 
     train_df, test_df = df.randomSplit([0.8, 0.2], seed=SEED)
 
-    # --------------------------------------------------
-    # 2️⃣ Train Models
-    # --------------------------------------------------
+    # 2️- Train Models
 
     print("Training Linear Regression...")
     lr_model = train_linear_regression(
@@ -56,9 +52,7 @@ def main():
         train_df, FEATURE_COL, TARGET_COL
     )
 
-    # --------------------------------------------------
-    # 3️⃣ Evaluate
-    # --------------------------------------------------
+    # 3️- Evaluate
 
     print("Evaluating models...")
 
@@ -81,9 +75,7 @@ def main():
         os.path.join(METRICS_DIR, "baseline_metrics.csv")
     )
 
-    # --------------------------------------------------
-    # 4️⃣ Select Best Model
-    # --------------------------------------------------
+    # 4️- Select Best Model
 
     if lr_rmse < dt_rmse:
         best_model = lr_model
@@ -96,9 +88,7 @@ def main():
 
     print(f"Best model: {best_model_name}")
 
-    # --------------------------------------------------
-    # 5️⃣ Save Predictions
-    # --------------------------------------------------
+    # 5️- Save Predictions
 
     print("Saving predictions...")
 
@@ -119,9 +109,7 @@ def main():
         index=False
     )
 
-    # --------------------------------------------------
-    # 6️⃣ Save Run Metadata
-    # --------------------------------------------------
+    # 6️- Save Run Metadata
 
     print("Saving run metadata...")
 
