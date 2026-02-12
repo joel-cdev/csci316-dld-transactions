@@ -1,4 +1,4 @@
-# 🏙 CSCI316 — Large-Scale Real Estate Analytics (Dubai Land Transactions)
+# CSCI316 — Large-Scale Real Estate Analytics (Dubai Land Transactions)
 
 **Course:** Big Data Mining and Applications
 **Institution:** University of Wollongong in Dubai
@@ -6,7 +6,7 @@
 
 ---
 
-## 📌 Overview
+## Overview
 
 This project implements a **Spark-native large-scale machine learning pipeline** for modeling Dubai real estate transaction prices using public land transaction data.
 
@@ -23,7 +23,7 @@ The focus of this project is **system design, scalability, and reproducibility**
 
 ---
 
-## 🎯 Problem Statement
+## Problem Statement
 
 Can we model real estate price-per-meter variation in Dubai using structured transaction data while ensuring scalability and robustness?
 
@@ -39,7 +39,7 @@ This project builds a distributed ML pipeline to address these challenges.
 
 ---
 
-## 📊 Dataset
+## Dataset
 
 **Source:** Dubai Pulse — Land Transactions Dataset
 
@@ -55,7 +55,7 @@ These characteristics justify distributed processing using Spark instead of Pand
 
 ---
 
-## 🧠 Why Apache Spark?
+## Why Apache Spark?
 
 Spark was selected because:
 
@@ -70,7 +70,7 @@ Processing this dataset purely with Pandas would be inefficient and non-scalable
 
 ---
 
-## 🏗 System Architecture
+## System Architecture
 
 ```
 Raw Dataset
@@ -94,9 +94,9 @@ Streamlit Dashboard
 
 ---
 
-## ⚙️ Pipeline Components
+## Pipeline Components
 
-### 1️⃣ Data Layer
+### Data Layer
 
 * Explicit schema definition
 * Null handling
@@ -104,19 +104,19 @@ Streamlit Dashboard
 * Data validation
 * Partition-aware transformations
 
-### 2️⃣ Feature Engineering
+### Feature Engineering
 
 * VectorAssembler
 * StandardScaler
 * Numeric feature selection
 * Target exclusion enforcement
 
-### 3️⃣ Baseline Models
+### Baseline Models
 
 * Linear Regression
 * Decision Tree Regressor
 
-### 4️⃣ Manual Cross Validation
+### Manual Cross Validation
 
 * Manual 10-fold splitting
 * Train on 9 folds
@@ -129,7 +129,7 @@ No use of:
 * `GridSearchCV`
 * Built-in Spark CV utilities
 
-### 5️⃣ Custom Ensemble
+### Custom Ensemble
 
 * Bagging implementation
 * Bootstrap sampling
@@ -138,7 +138,7 @@ No use of:
 
 ---
 
-## 📈 Results Summary
+## Results Summary
 
 | Model             | RMSE     | R²      |
 | ----------------- | -------- | ------- |
@@ -156,7 +156,7 @@ The primary bottleneck is **feature richness**, not model type.
 
 ---
 
-## 🔍 Key Insights
+## Key Insights
 
 * Price distribution is heavy-tailed.
 * Errors increase for high-value properties (heteroscedasticity).
@@ -166,7 +166,7 @@ The primary bottleneck is **feature richness**, not model type.
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 * Limited feature set
 * No categorical encoding yet
@@ -178,7 +178,7 @@ These were deliberate constraints to prioritize system architecture validation.
 
 ---
 
-## 🚀 Future Work
+## Future Work
 
 * Log-transform target variable
 * Add categorical encoding (location, property type)
@@ -190,7 +190,7 @@ These were deliberate constraints to prioritize system architecture validation.
 
 ---
 
-## 📦 Repository Structure
+## Repository Structure
 
 ```
 data/
@@ -220,7 +220,7 @@ README.md
 
 ---
 
-## 📊 Generated Artifacts
+## Generated Artifacts
 
 Running the pipeline produces:
 
@@ -235,21 +235,21 @@ These artifacts power the Streamlit dashboard.
 
 ---
 
-## 🧪 How to Run
+## How to Run
 
-### 1️⃣ Install dependencies
+### Install dependencies
 
 ```
 pip install -r requirements.txt
 ```
 
-### 2️⃣ Run the full Spark pipeline
+### Run the full Spark pipeline
 
 ```
 python scripts/run_pipeline.py
 ```
 
-### 3️⃣ Launch Streamlit dashboard
+### Launch Streamlit dashboard
 
 ```
 streamlit run streamlit_app.py
@@ -257,7 +257,7 @@ streamlit run streamlit_app.py
 
 ---
 
-## 🐳 Docker (UI Only)
+## Docker (UI Only)
 
 Docker is used to containerize the Streamlit showcase for reproducibility.
 
@@ -275,7 +275,7 @@ docker run -p 8501:8501 dld-streamlit
 
 ---
 
-## 📚 References
+## References
 
 * Apache Spark Documentation
 * Dubai Pulse Data Portal
@@ -284,7 +284,7 @@ docker run -p 8501:8501 dld-streamlit
 
 ---
 
-## 🏁 Final Takeaway
+## Final Takeaway
 
 This project demonstrates:
 
