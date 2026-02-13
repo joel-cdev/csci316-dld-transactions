@@ -59,4 +59,6 @@ The notebooks should be read and executed in the following order:
 | `03_baseline_models.ipynb` | Training and evaluation of baseline machine learning models |
 | `04_manual_10fold_cv.ipynb` | Manual implementation of 10-fold cross-validation |
 | `05_custom_ensemble.ipynb` | Custom bagging or boosting ensemble implemented from scratch |
-| `06_results_analysis.ipynb` | Interpretation, visualization, and discussion of results |
+| `05_custom_ensemble_combined_ml_cv.ipynb` | Combined baseline training, manual CV, and bagging ensemble evaluation |
+
+
